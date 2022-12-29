@@ -8,7 +8,7 @@ using My_Twitter_Clone_Backend.Data;
 
 #nullable disable
 
-namespace MyTwitterCloneBackend.Migrations
+namespace My_Twitter_Clone_Backend.Migrations
 {
     [DbContext(typeof(TwitterContext))]
     partial class TwitterContextModelSnapshot : ModelSnapshot
@@ -17,173 +17,227 @@ namespace MyTwitterCloneBackend.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("My_Twitter_Clone_Backend.Models.Comment", b =>
+            modelBuilder.Entity("My_Twitter_Clone_Backend.Models.Reply", b =>
                 {
-                    b.Property<int>("CommentId")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("CommentCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CommentLikeCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
+                    b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LikeCount")
                         .HasColumnType("int");
 
-                    b.HasKey("CommentId");
+                    b.Property<int?>("RetweetCount")
+                        .HasColumnType("int");
 
-                    b.HasIndex("PostId");
+                    b.Property<int?>("TweetId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TweetId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Replies", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Body = "Allo, Allo",
+                            CreatedAt = new DateTime(2022, 12, 11, 0, 0, 0, 0, DateTimeKind.Local),
+                            LikeCount = 1,
+                            TweetId = 1,
+                            UserId = 4
+                        });
                 });
 
-            modelBuilder.Entity("My_Twitter_Clone_Backend.Models.Post", b =>
+            modelBuilder.Entity("My_Twitter_Clone_Backend.Models.Tweet", b =>
                 {
-                    b.Property<int>("PostId")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
-                    b.Property<int>("CommentCount")
+                    b.Property<int?>("LikeCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("LikeCount")
+                    b.Property<int?>("RetweetCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Tweet")
-                        .IsRequired()
+                    b.Property<string>("TweetBody")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("TweetCreated")
+                    b.Property<DateTime?>("TweetCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("PostId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts");
-                });
+                    b.ToTable("Tweets", (string)null);
 
-            modelBuilder.Entity("My_Twitter_Clone_Backend.Models.Retweet", b =>
-                {
-                    b.Property<int>("RetweetId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RetweetId"));
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("RetweetCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RetweetId");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Retweets");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            LikeCount = 2,
+                            RetweetCount = 1,
+                            TweetBody = "Hello World",
+                            TweetCreated = new DateTime(2022, 12, 10, 19, 30, 0, 0, DateTimeKind.Local),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            TweetBody = "Hi yourself",
+                            TweetCreated = new DateTime(2022, 12, 10, 19, 35, 0, 0, DateTimeKind.Local),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 3,
+                            TweetBody = "Bonjour tout le monde",
+                            TweetCreated = new DateTime(2022, 12, 10, 19, 40, 0, 0, DateTimeKind.Local),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 4,
+                            TweetBody = "Bond, James Bond. Shaken, not stirred.",
+                            TweetCreated = new DateTime(2022, 12, 11, 15, 30, 0, 0, DateTimeKind.Local),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            TweetBody = "Nei, Pepsi er ekki í lagi. Ég vil Kók!",
+                            TweetCreated = new DateTime(2022, 12, 12, 18, 45, 0, 0, DateTimeKind.Local),
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("My_Twitter_Clone_Backend.Models.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserId"), 1L, 1);
 
                     b.Property<string>("DisplayName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProfilePic")
-                        .IsRequired()
+                    b.Property<string>("Handle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
+                    b.Property<string>("ImageURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            DisplayName = "John Smith",
+                            Handle = "J.Smith",
+                            ImageURL = "https://comicvine.gamespot.com/a/uploads/square_medium/8/80111/3259571-john%20smith%207.png"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            DisplayName = "Jón Jónsson",
+                            Handle = "Nonni",
+                            ImageURL = "https://www.gunnarf.is/static/gallery/vesturaettarmyndir/sm/crop-jon-olafur-jonsson-2.jpg?v2"
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            DisplayName = "James Bond",
+                            Handle = "007",
+                            ImageURL = "https://www.classical-guitar-music.com/wp-content/uploads/2017/10/8446295874_91e78074e61.jpg"
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            DisplayName = "Jesus H Christ",
+                            Handle = "SonOfGod",
+                            ImageURL = "https://i1.sndcdn.com/avatars-000310363975-0nia22-t240x240.jpg"
+                        },
+                        new
+                        {
+                            UserId = 5,
+                            DisplayName = "Joan of Arc",
+                            Handle = "BurntWitch",
+                            ImageURL = "https://royalarmouries.org/wp-content/uploads/2020/08/1024px-Joan_of_Arc_miniature_graded-e1597418920698-350x350.jpg"
+                        },
+                        new
+                        {
+                            UserId = 6,
+                            DisplayName = "Ég",
+                            Handle = "UmMigFráMérTilMín",
+                            ImageURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
+                        });
                 });
 
-            modelBuilder.Entity("My_Twitter_Clone_Backend.Models.Comment", b =>
+            modelBuilder.Entity("My_Twitter_Clone_Backend.Models.Reply", b =>
                 {
-                    b.HasOne("My_Twitter_Clone_Backend.Models.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("My_Twitter_Clone_Backend.Models.Tweet", "Tweet")
+                        .WithMany("Replies")
+                        .HasForeignKey("TweetId");
 
                     b.HasOne("My_Twitter_Clone_Backend.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Replies")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.Navigation("Post");
+                    b.Navigation("Tweet");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("My_Twitter_Clone_Backend.Models.Post", b =>
+            modelBuilder.Entity("My_Twitter_Clone_Backend.Models.Tweet", b =>
                 {
                     b.HasOne("My_Twitter_Clone_Backend.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Tweets")
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("My_Twitter_Clone_Backend.Models.Retweet", b =>
+            modelBuilder.Entity("My_Twitter_Clone_Backend.Models.Tweet", b =>
                 {
-                    b.HasOne("My_Twitter_Clone_Backend.Models.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Replies");
+                });
 
-                    b.HasOne("My_Twitter_Clone_Backend.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("My_Twitter_Clone_Backend.Models.User", b =>
+                {
+                    b.Navigation("Replies");
 
-                    b.Navigation("Post");
-
-                    b.Navigation("User");
+                    b.Navigation("Tweets");
                 });
 #pragma warning restore 612, 618
         }
