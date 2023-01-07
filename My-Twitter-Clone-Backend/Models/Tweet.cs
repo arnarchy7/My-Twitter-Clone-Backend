@@ -14,6 +14,5 @@
 
         public ICollection<Reply> ?Replies { get; set; }
 
-
     }
 }
